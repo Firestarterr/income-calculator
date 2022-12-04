@@ -17,18 +17,8 @@ import java.util.stream.Stream;
 
 import static i.am.firestartrr.GibTarife.GelirVergisiDilimi;
 
-public class YillikGelirGiderHesapTahminiWithData {
+public class YillikGelirGiderHesapTahminiWithData implements Constants {
 
-    private static final double kdv1 = 1d;
-    private static final double kdv8 = 8d;
-    private static final double kdv18 = 18d;
-    private static final double aylikTahminiFatura = 2870d * 15d;
-    private static final double aylikTahminiFaturaKdvDahil = aylikTahminiFatura * (kdv18 + 100) / 100;
-    private static final double aylikTahminiKdvsizFatura = 5200d;
-    private static final double aylikTahmini0Gider = 2300d;
-    private static final double aylikTahmini1Gider = 6000d;
-    private static final double aylikTahmini8Gider = 15500d;
-    private static final double aylikTahmini18Gider = 15250d;
 
     public static void main(String[] args) throws IOException, URISyntaxException {
         DecimalFormat paraFormatter = new DecimalFormat("#,###,###,##0.00");
@@ -50,8 +40,7 @@ public class YillikGelirGiderHesapTahminiWithData {
             AylikFatura oncekiFatura = aylikFaturalar.get(i - 1);
             AylikGider oncekiGider = aylikGiderler.get(i - 1);
 
-            double gelir = oncekiFatura.getAylikKazanc() - oncekiGider.getToplamKdvsiz();
-            gelir = gelir - oncekiFatura.getKdvsizFaturaToplamTutar() / 2;
+            double gelir = oncekiFatura.calculateGelir(oncekiGider.getToplamKdvsiz()) - oncekiGider.getToplamKdvsiz();
             yillikKazanc += oncekiFatura.getAylikKazanc();
             double aylikKalanKdv = oncekiFatura.getKdv() - oncekiGider.getToplamKdv();
 
@@ -142,6 +131,15 @@ public class YillikGelirGiderHesapTahminiWithData {
         public double getAylikKazanc() {
             return getKdvliFaturaKdvDahilToplamTutar() + getKdvsizFaturaToplamTutar();
         }
+
+        public double calculateGelir(double gider) {
+            double gelir = getKdvliFaturaKdvDahilToplamTutar() - gider;
+            if (gelir > 0) {
+                return gelir + getKdvsizFaturaToplamTutar() / 2;
+            } else {
+                return (getKdvsizFaturaToplamTutar() + gelir) / 2;
+            }
+        }
     }
 
     public static class OncekiFaturalar {
@@ -161,7 +159,8 @@ public class YillikGelirGiderHesapTahminiWithData {
                 }
             }
             while (oncekiFaturalar.size() < 12) {
-                oncekiFaturalar.add(new AylikFatura(aylikTahminiFaturaKdvDahil, aylikTahminiKdvsizFatura * dovizKuru));
+                oncekiFaturalar.add(new AylikFatura((aylikTahminiFatura * (kdv18 + 100) / 100),
+                        aylikTahminiKdvsizFatura * dovizKuru));
             }
             return oncekiFaturalar;
         }
