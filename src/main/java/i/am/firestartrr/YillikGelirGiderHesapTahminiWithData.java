@@ -45,7 +45,7 @@ public class YillikGelirGiderHesapTahminiWithData implements Constants {
             double aylikKalanKdv = oncekiFatura.getKdv() - oncekiGider.getToplamKdv();
 
             toplamGelir += gelir;
-            dusmedenToplamGelir += oncekiFatura.getAylikKazanc() - oncekiFatura.getKdvsizFaturaToplamTutar() / 2;
+            dusmedenToplamGelir += oncekiFatura.calculateGelir(0d);
             System.out.println(i + " ay Ele Gecen: " + paraFormatter.format(oncekiFatura.getAylikKazanc()) + "\tGelir"
                     + " Kdv: " + paraFormatter.format(oncekiFatura.getKdv()));
             System.out.println(i + " ay Gideri: " + paraFormatter.format(oncekiGider.getToplamKdvli()) + "\tGider " + "Kdv: " + paraFormatter.format(oncekiGider.getToplamKdv()));
@@ -108,7 +108,8 @@ public class YillikGelirGiderHesapTahminiWithData implements Constants {
         System.out.println("----- Hesap -----");
         System.out.println("Toplam Kazanılan: " + paraFormatter.format(yillikKazanc));
         System.out.println("Toplam Kdv: " + paraFormatter.format(toplamKdv) + "\t" + " Hiç Düşmezsen: " + paraFormatter.format(dusmedenToplamKdv));
-        System.out.println("Toplam Gelir Vergisi: " + paraFormatter.format(toplamGelirVergisi) + "\t" + " Hiç " + "D" + "üşmezsen: " + paraFormatter.format(dusmedenToplamGelirVergisi));
+        System.out.println("Toplam Gelir Vergisi: " + paraFormatter.format(toplamGelirVergisi) + "\t" + " Hiç " +
+                "Düşmezsen: " + paraFormatter.format(dusmedenToplamGelirVergisi));
         double eldeKalanPara = yillikKazanc - toplamKdv - toplamGelirVergisi;
         System.out.println("Elde Kalan Para Yillik: " + paraFormatter.format(eldeKalanPara));
         System.out.println("Elde Kalan Para Aylik: " + paraFormatter.format(eldeKalanPara / 12));
