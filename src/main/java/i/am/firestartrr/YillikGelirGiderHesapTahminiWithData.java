@@ -40,7 +40,7 @@ public class YillikGelirGiderHesapTahminiWithData implements Constants {
             AylikFatura oncekiFatura = aylikFaturalar.get(i - 1);
             AylikGider oncekiGider = aylikGiderler.get(i - 1);
 
-            double gelir = oncekiFatura.calculateGelir(oncekiGider.getToplamKdvsiz()) - oncekiGider.getToplamKdvsiz();
+            double gelir = oncekiFatura.calculateGelir(oncekiGider.getToplamKdvsiz());
             yillikKazanc += oncekiFatura.getAylikKazanc();
             double aylikKalanKdv = oncekiFatura.getKdv() - oncekiGider.getToplamKdv();
 
