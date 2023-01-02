@@ -7,12 +7,12 @@ public interface Constants {
     double kdv8 = 8d;
     double kdv18 = 18d;
 
-    double aylikTahminiFatura = 2870d * 15d;
-    double aylikTahminiKdvsizFatura = 5200d;
+    double aylikTahminiFatura = 0d;//türkiyeye kesilen faturalar
+    double aylikTahminiKdvsizFatura = 0d;//yurt dışına kesilen istisna faturalar
 
-    double aylikTahmini0Gider = 2300d;
-    double aylikTahmini1Gider = 6000d;
-    double aylikTahmini8Gider = 15000d;
-    double aylikTahmini18Gider = 15000d;
+    double aylikTahmini0Gider = 0d;
+    double aylikTahmini1Gider = 0d;
+    double aylikTahmini8Gider = 0d;
+    double aylikTahmini18Gider = 0d;
 
 }
